@@ -1,6 +1,8 @@
 package com.example.activity_log_api.model
 
 import com.example.activity_log_api.model.dto.ActivityTypeResponse
+import com.example.activity_log_api.model.dto.UserRequest
+import com.example.activity_log_api.model.dto.UserResponse
 import jakarta.persistence.*
 
 @Entity
@@ -20,11 +22,20 @@ class User {
     var password: String? = null
 }
 
-object activityTypeMapper {
-    fun ActivityType.toResponse(): ActivityTypeResponse {
-        val res = ActivityTypeResponse()
+object userMapper {
+    fun UserRequest.toEntity(): User {
+        val user = User()
+        user.username = this.username
+        user.email = this.email
+        user.password = this.password
+        return user
+    }
+
+    fun User.toResponse(): UserResponse {
+        val res = UserResponse()
         res.id = this.id
-        res.name = this.name
+        res.username = this.username
+        res.email = this.email
         return res
     }
 }

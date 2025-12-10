@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ActivityLogRepository : JpaRepository<ActivityLog, Long>, JpaSpecificationExecutor<ActivityLog>
+interface ActivityLogRepository : JpaRepository<ActivityLog, Long>, JpaSpecificationExecutor<ActivityLog>{
+    fun findByUserId(userId: Long): List<ActivityLog>
+}

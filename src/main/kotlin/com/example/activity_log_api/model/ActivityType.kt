@@ -1,5 +1,7 @@
 package com.example.activity_log_api.model
 
+import com.example.activity_log_api.model.dto.ActivityTypeRequest
+import com.example.activity_log_api.model.dto.ActivityTypeResponse
 import jakarta.persistence.*
 import java.time.LocalDateTime
 @Entity
@@ -13,20 +15,16 @@ class ActivityType {
     var name: String? = null
 }
 
-object userMapper {
-    fun User.toDto(): UserDto {
-        return UserDto(
-            id = this.id,
-            username = this.username,
-            email = this.email
-        )
+object activityTypeMapper {
+    fun ActivityTypeRequest.toEntity(type: ActivityType = ActivityType()): ActivityType {
+        type.name = this.name
+        return type
     }
 
-    fun UserDto.toEntity(): User {
-        val user = User()
-        user.id = this.id
-        user.username = this.username
-        user.email = this.email
-        return user
+    fun ActivityType.toResponse(): ActivityTypeResponse {
+        val res = ActivityTypeResponse()
+        res.id = this.id
+        res.name = this.name
+        return res
     }
 }
