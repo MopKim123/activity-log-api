@@ -53,9 +53,11 @@ class ActivityLogServiceImpl(
     }
 
     @Transactional
-    override fun update(id: Long, description: String?): ActivityLogResponse {
+    override fun update(id: Long, description: String?, typeId: Long): ActivityLogResponse {
+        val type = activityTypeRepository.findById(typeId).orElseThrow { IllegalArgumentException("Log type not found") }
         val log = activityLogRepository.findById(id).orElseThrow { IllegalArgumentException("Log not found") }
         log.description = description
+        log.activityType = type
         return activityLogRepository.save(log).toResponse()
     }
 

@@ -8,7 +8,7 @@ interface ActivityLogService {
     fun getAll(filters: ActivityLogFilterRequest? = null): List<ActivityLogResponse>
     fun getById(id: Long): ActivityLogResponse?
     fun create(request: ActivityLogRequest): ActivityLogResponse
-    fun update(id: Long, description: String?): ActivityLogResponse
     fun delete(id: Long)
     fun getLogsByUser(userId: Long, filters: ActivityLogFilterRequest?): List<ActivityLogResponse>
+    fun update(id: Long, description: String?, typeId: Long): ActivityLogResponse
 }
