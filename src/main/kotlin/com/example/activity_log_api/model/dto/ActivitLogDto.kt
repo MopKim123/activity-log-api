@@ -15,3 +15,10 @@ class ActivityLogResponse {
     var description: String? = null
     var createdAt: LocalDateTime? = null
 }
+
+class ActivityLogFilterRequest {
+    var userId: Long? = null
+    var activityTypeId: Long? = null
+    var startDate: LocalDateTime? = null
+    var endDate: LocalDateTime? = null
+}
