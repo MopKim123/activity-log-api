@@ -1,12 +1,10 @@
 package com.example.studentapi.util
 
 import com.example.activity_log_api.model.User
+import com.example.activity_log_api.model.dto.UserRequest
 
 object TestData {
 
-    //Course
-//    fun courseData(id: Long = 0, name: String = "BSIT") = Course( id = id, name = name )
-//    fun courseRequestDtoData( name: String = "BSIT") = CourseRequestDto( name = name )
 
     //User
     fun userData(
@@ -20,4 +18,16 @@ object TestData {
         email = email,
         password = password,
     )
+
+    fun userRequest(
+        username: String = "username",
+        email: String = "email@email.com",
+        password: String = "password",
+    ) = UserRequest(
+        username = username,
+        email = email,
+        password = password,
+    )
+
+
 }
