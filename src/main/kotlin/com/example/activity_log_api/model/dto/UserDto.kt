@@ -14,6 +14,14 @@ class UserRequest {
     var password: String? = null
 }
 
+data class LoginRequest (
+    @field:NotBlank
+    var username: String,
+
+    @field:NotBlank
+    var password: String
+)
+
 class UserResponse {
     var id: Long? = null
     var username: String? = null

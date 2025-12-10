@@ -1,5 +1,6 @@
 package com.example.activity_log_api.controller
 
+import com.example.activity_log_api.model.dto.LoginRequest
 import com.example.activity_log_api.model.dto.UserRequest
 import com.example.activity_log_api.model.dto.UserResponse
 import com.example.activity_log_api.service.UserService
@@ -22,6 +23,6 @@ class UserController(
         ResponseEntity.ok(userService.register(request))
 
     @PostMapping("/login")
-    fun login(@RequestParam username: String, @RequestParam password: String): ResponseEntity<UserResponse> =
-        userService.login(username, password)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.badRequest().build()
+    fun login(@Valid @RequestBody request: LoginRequest): ResponseEntity<UserResponse> =
+        userService.login(request.username, request.password)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.badRequest().build()
 }
