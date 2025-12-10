@@ -7,6 +7,8 @@ import com.example.activity_log_api.service.ActivityLogService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/logs")
@@ -31,8 +33,8 @@ class ActivityLogController(
     ): ResponseEntity<List<ActivityLogResponse>> {
         val filter = ActivityLogFilterRequest().apply {
             this.activityTypeId = activityTypeId
-            this.startDate = startDate?.let { java.time.LocalDateTime.parse(it) }
-            this.endDate = endDate?.let { java.time.LocalDateTime.parse(it) }
+            this.startDate = startDate?.let { java.time.LocalDate.parse(it).atStartOfDay() }
+            this.endDate = endDate?.let { LocalDateTime.of(LocalDate.parse(it), java.time.LocalTime.of(23, 59, 59)) }
         }
         return ResponseEntity.ok(activityLogService.getLogsByUser(userId, filter))
     }
@@ -42,8 +44,8 @@ class ActivityLogController(
         ResponseEntity.ok(activityLogService.create(request))
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestParam description: String?): ResponseEntity<ActivityLogResponse> =
-        ResponseEntity.ok(activityLogService.update(id, description))
+    fun update(@PathVariable id: Long, @RequestParam description: String?, @RequestParam typeId: Long): ResponseEntity<ActivityLogResponse> =
+        ResponseEntity.ok(activityLogService.update(id, description, typeId))
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Void> {
