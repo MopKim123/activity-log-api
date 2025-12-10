@@ -10,5 +10,5 @@ interface ActivityLogService {
     fun create(request: ActivityLogRequest): ActivityLogResponse
     fun update(id: Long, description: String?): ActivityLogResponse
     fun delete(id: Long)
-    fun getLogsByUser(userId: Long): List<ActivityLogResponse>
+    fun getLogsByUser(userId: Long, filters: ActivityLogFilterRequest?): List<ActivityLogResponse>
 }

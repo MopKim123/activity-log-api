@@ -34,8 +34,14 @@ class ActivityLogServiceImpl(
     override fun getById(id: Long): ActivityLogResponse? =
         activityLogRepository.findById(id).orElse(null)?.toResponse()
 
-    override fun getLogsByUser(userId: Long): List<ActivityLogResponse> =
-        activityLogRepository.findByUserId(userId).map { it.toResponse() }
+    override fun getLogsByUser(userId: Long, filters: ActivityLogFilterRequest?): List<ActivityLogResponse> {
+        val filter = filters?.apply { this.userId = userId } ?: ActivityLogFilterRequest().also { it.userId = userId }
+
+        return activityLogRepository
+            .findAll(ActivityLogSpecification.toSpec(filter))
+            .map { it.toResponse() }
+    }
+
 
     @Transactional
     override fun create(request: ActivityLogRequest): ActivityLogResponse {

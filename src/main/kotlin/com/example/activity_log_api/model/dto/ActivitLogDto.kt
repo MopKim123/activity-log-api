@@ -23,6 +23,7 @@ class ActivityLogResponse {
 }
 
 class ActivityLogFilterRequest {
+    var userId: Long? = null
     var activityTypeId: Long? = null
     var startDate: LocalDateTime? = null
     var endDate: LocalDateTime? = null
