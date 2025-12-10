@@ -6,14 +6,14 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 @Entity
 @Table(name = "activity_types")
-class ActivityType {
+class ActivityType (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    var id: Long? = null,
 
     @Column(unique = true, nullable = false)
     var name: String? = null
-}
+)
 
 object activityTypeMapper {
     fun ActivityTypeRequest.toEntity(type: ActivityType = ActivityType()): ActivityType {

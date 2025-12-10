@@ -6,27 +6,28 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "users")
-class User {
+class User (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    var id: Long = 0,
 
     @Column(unique = true, nullable = false)
-    var username: String? = null
+    var username: String = "",
 
     @Column(unique = true, nullable = false)
-    var email: String? = null
+    var email: String? = null,
 
     @Column(nullable = false)
     var password: String? = null
-}
+)
 
 object userMapper {
     fun UserRequest.toEntity(): User {
-        val user = User()
-        user.username = this.username
-        user.email = this.email
-        user.password = this.password
+        val user = User(
+            username = this.username,
+            email = this.email,
+            password = this.password
+        )
         return user
     }
 

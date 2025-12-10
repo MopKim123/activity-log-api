@@ -4,27 +4,27 @@ import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
 
 
-class ActivityLogRequest {
+data class ActivityLogRequest (
     @field:NotNull
-    var userId: Long? = null
+    var userId: Long,
 
     @field:NotNull
-    var activityTypeId: Long? = null
+    var activityTypeId: Long,
 
     var description: String? = null
-}
+)
 
-class ActivityLogResponse {
-    var id: Long? = null
-    var userId: Long? = null
-    var activityTypeId: Long? = null
-    var description: String? = null
-    var createdAt: LocalDateTime? = null
-}
+data class ActivityLogResponse (
+    var id: Long,
+    var userId: Long,
+    var activityTypeId: Long? = null,
+    var description: String? = null,
+    var createdAt: LocalDateTime? = null,
+)
 
-class ActivityLogFilterRequest {
-    var userId: Long? = null
-    var activityTypeId: Long? = null
-    var startDate: LocalDateTime? = null
+data class ActivityLogFilterRequest (
+    var userId: Long? = null,
+    var activityTypeId: Long? = null,
+    var startDate: LocalDateTime? = null,
     var endDate: LocalDateTime? = null
-}
+)
