@@ -1,6 +1,5 @@
 package com.example.activity_log_api.model
 
-import com.example.activity_log_api.model.dto.ActivityTypeResponse
 import com.example.activity_log_api.model.dto.UserRequest
 import com.example.activity_log_api.model.dto.UserResponse
 import jakarta.persistence.*
@@ -31,11 +30,12 @@ object userMapper {
         return user
     }
 
-    fun User.toResponse(): UserResponse {
+    fun User.toResponse(token: String): UserResponse {
         val res = UserResponse()
         res.id = this.id
         res.username = this.username
         res.email = this.email
+        res.token = token
         return res
     }
 }

@@ -7,16 +7,18 @@ import com.example.activity_log_api.model.userMapper.toEntity
 import com.example.activity_log_api.model.userMapper.toResponse
 import com.example.activity_log_api.repository.UserRepository
 import com.example.activity_log_api.service.UserService
+import com.example.activity_log_api.util.JwtUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserServiceImpl(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val jwtUtil: JwtUtil
 ): UserService {
 
     override fun getById(id: Long): UserResponse? =
-        userRepository.findById(id).orElse(null)?.toResponse()
+        userRepository.findById(id).orElse(null)?.toResponse("")
 
     @Transactional
     override fun register(request: UserRequest): UserResponse {
@@ -27,11 +29,17 @@ class UserServiceImpl(
             throw IllegalArgumentException("Email already exists")
         }
 
-        return request.toEntity().let { userRepository.save(it).toResponse() }
+        return request.toEntity().let { userRepository.save(it).toResponse("") }
     }
 
-    override fun login(username: String, password: String): UserResponse? =
-        userRepository.findByUsername(username)
-            ?.takeIf { it.password == password }
-            ?.toResponse()
+    override fun login(username: String, password: String): UserResponse? {
+        val user = userRepository.findByUsername(username)
+            ?.takeIf { it.password == password } ?: return null
+
+        // Generate JWT using username
+        val token = jwtUtil.generateToken(user.username!!)
+
+        // Return user response with token
+        return user.toResponse(token)
+    }
 }

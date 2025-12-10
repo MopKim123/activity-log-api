@@ -1,7 +1,6 @@
 package com.example.activity_log_api.model.dto
 
 import jakarta.validation.constraints.NotBlank
-import java.time.LocalDateTime
 
 class UserRequest {
     @field:NotBlank
@@ -22,8 +21,9 @@ data class LoginRequest (
     var password: String
 )
 
-class UserResponse {
-    var id: Long? = null
-    var username: String? = null
-    var email: String? = null
-}
+data class UserResponse(
+    var id: Long? = null,
+    var username: String? = null,
+    var email: String? = null,
+    var token: String? = null
+)
